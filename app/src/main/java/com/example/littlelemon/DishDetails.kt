@@ -1,38 +1,38 @@
 package com.example.littlelemon
 
-import androidx.compose.foundation.Image
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
+import coil.compose.AsyncImage
 
 @Composable
 fun DishDetails(id: Int) {
     val dish = requireNotNull(DishRepository.getDish(id))
+    val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        TopAppBar()
-        Image(
-            bitmap = loadScaledBitmap(dish.imageResource, 800, 800),
+        val context = LocalContext.current
+        TopAppBar(onBackClick = { (context as? ComponentActivity)?.onBackPressedDispatcher?.onBackPressed() })
+
+        AsyncImage(
+            model = dish.imageUrl,
             contentDescription = "Dish image",
-            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(500.dp) // Fixed image height
+                .height(500.dp)
         )
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -47,7 +47,7 @@ fun DishDetails(id: Int) {
             )
             Column(
                 modifier = Modifier
-                    .height(140.dp) // Fixed description scroll box height
+                    .height(140.dp)
                     .verticalScroll(rememberScrollState())
             ) {
                 Text(
@@ -120,10 +120,4 @@ fun Counter() {
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun DishDetailsPreview() {
-    DishDetails(id = 1)
 }

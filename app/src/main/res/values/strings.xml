@@ -4,6 +4,8 @@
     <string name="location">Chicago</string>
     <string name="description">We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</string>
     <string name="order_button_text">Order Take Away</string>
-    <string name="weekly_special">Weekly Special</string>
+    <string name="order_for_delivery">ORDER FOR DELIVERY!</string>
     <string name="add_for">Add for</string>
+    <string name="title_activity_onboarding">Onboarding</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 </resources>
